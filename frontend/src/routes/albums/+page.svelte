@@ -1,11 +1,18 @@
+<script>
+
+import { goto } from '$app/navigation';
+
+const handleRouting = () => {
+  console.log('Viewing album');
+  setTimeout(() => goto('/album-viewer'), 0);
+};
+</script>
+
+
 <svelte:head>
 	<title>Albums</title>
 	<meta name="albums" content="Your private and shared albums" />
 </svelte:head>
-
-
-
-
   
   <div class="album py-5 bg-light">
     <div class="container">
@@ -22,7 +29,7 @@
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                  <button type="button" on:click={handleRouting} class="btn btn-sm btn-outline-secondary">View</button> <!-- Here the link goes.-->
                   <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                 </div>
                 <small class="text-muted">9 mins</small>

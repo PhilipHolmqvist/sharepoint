@@ -33,7 +33,7 @@
 			</li>
 		  </ul>
 
-		  <a class="navbar-brand p-0" href="#">
+		  <a class="navbar-brand p-0" href="/profile">
 			<img src={profilePic} width="50" height="50" class="d-inline-block align-top" alt="">
 		  </a>
 		  
