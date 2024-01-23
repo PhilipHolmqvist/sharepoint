@@ -5,10 +5,12 @@
 
   import { goto } from '$app/navigation';
 
-  const handleLogin = () => {
-    console.log('Attempting to login..');
-    setTimeout(() => goto('/dashboard'), 0);
-  };
+  async function signInWithEmail() {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: 'example@email.com',
+    password: 'example-password'
+  })
+}
 
 </script>
 

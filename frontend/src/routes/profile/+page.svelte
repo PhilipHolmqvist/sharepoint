@@ -14,6 +14,7 @@
 	const signUpDate = "12 Jan 2024"
 	const authLevel = "administrator"
 	const email = "philip.holmqvist@outlook.com"
+	
 </script>
 
 <div class="container">
