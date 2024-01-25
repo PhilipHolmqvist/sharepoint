@@ -1,16 +1,13 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import logo from '$lib/images/icon.jpg';
 	import profilePic from '$lib/images/profile-picture.jpg';
 	import { goto } from '$app/navigation';
 
- 	
 
-	
 </script>
 
 
-{#if $page.url.pathname != '/'}
 <header>
 	<nav class="navbar py-3 navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand p-0" href="/dashboard">
@@ -46,6 +43,3 @@
 		border-radius: 50%; 	
 	}
 </style>
-
-
-{/if}

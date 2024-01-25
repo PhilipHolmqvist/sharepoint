@@ -3,20 +3,32 @@
 	<meta name="profile" content="About this app" />
 </svelte:head>
 
-<script>
-	//ToDo: 
-	//Fixa indentering i denna filen.
-	//Byte av profilbild.
-
+<script lang="ts">
+	import { enhance } from "$app/forms";
+	import type { SubmitFunction } from "@sveltejs/kit";
+	import { supabaseClient } from '$lib/supabase';
 	import profilePic from '$lib/images/profile-picture.jpg';
+	import type { PageData } from './$types';
+	import { goto } from '$app/navigation';
 	const fullName = "Philip Holmqvist"
 	const username = "holmen00"
 	const signUpDate = "12 Jan 2024"
 	const authLevel = "administrator"
 	const email = "philip.holmqvist@outlook.com"
-	
-</script>
+	export let data: PageData;
 
+	const submitLogout: SubmitFunction = async ({ cancel }) => {
+		const { error } = await supabaseClient.auth.signOut();
+		if (error) {
+			console.log(error);
+		}
+		console.log("Utloggad!")
+		cancel();
+		
+	};
+</script>
+{#if data.session}
+<p>Welcome, {data.session.user.email}</p>
 <div class="container">
 	<div class="row flex-lg-nowrap">
 		<div class="col-12 col-lg-auto mb-3" style="width: 200px;">
@@ -295,7 +307,10 @@
 							<div class="px-xl-3">
 								<button class="btn btn-block btn-secondary">
 									<i class="fa fa-sign-out"></i>
-									<span>Logout</span>
+									<!-- <span>Logout</span> -->
+									<form action="/logout" method="POST" use:enhance={submitLogout}>
+										<button type="submit" class="btn btn-primary">Logout</button>
+									</form>
 								</button>
 							</div>
 						</div>
@@ -317,3 +332,7 @@
 		</div>
 	</div>
 </div>
+{:else}
+<p>Du är utloggad</p>
+{goto("/")}
+{/if}

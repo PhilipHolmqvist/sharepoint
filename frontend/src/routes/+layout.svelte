@@ -4,8 +4,11 @@
 	import { supabaseClient } from '$lib/supabase';
 	import { onMount } from 'svelte';
 	import Header from './Header.svelte';
+	import type { PageData } from './$types';
 	//import '../app.postcss';
 	import './styles.css';
+
+	export let data: PageData;
 
 	onMount(() => {
 		const {
@@ -22,7 +25,9 @@
 </script>
 
 <div class="app">
+	{#if data.session}
 	<Header />
+	{/if}
 
 	<main>
 		<slot />
