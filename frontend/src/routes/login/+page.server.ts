@@ -9,7 +9,10 @@ export const actions: Actions = {
 		const { data, error: err } = await locals.sb.auth.signInWithPassword({
 			email: body.email as string,
 			password: body.password as string,
+			
 		})
+		console.log("Form called")
+		console.log("Email: ")
 
 		if (err) {
 			if (err instanceof AuthApiError && err.status === 400) {

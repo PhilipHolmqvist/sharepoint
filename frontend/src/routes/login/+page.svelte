@@ -99,21 +99,23 @@ margin-right: 4px;
 
 </style>
 
+<main>
 <div class="background">
 </div>
-	<form>
+  <form action="?/login" method="POST" class="auth-form">
 	    <img src="logo-small-transparent.jpg" alt="bild">
 
-        <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="username">
+        <label for=""> Email </label>
+        <input type="text" placeholder="Email" name="email">
 
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password">
+        <label for=""> Password </label>
+        <input type="password" placeholder="Password" name="password">
 
-        <button on:click={handleLogin}>Log In</button>
+        <button type="submit" class="btn btn-primary">Log In</button>
 
         <div class="social">
           <div class="go"><i class="fab fa-google"></i>  Google</div>
           <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
         </div>
     </form>
+</main>

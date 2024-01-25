@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { enhance, type SubmitFunction } from '$app/forms';
+	import { enhance } from "$app/forms";
+	import type { SubmitFunction } from "@sveltejs/kit";
 	import { supabaseClient } from '$lib/supabase';
 	import type { PageData } from './$types';
 
