@@ -6,6 +6,7 @@
 
 <script lang="ts">
 	import albumPic from '$lib/images/defualt-album.jpg';
+	export let data: PageData;
 </script>
 
 <div class="container">
@@ -56,6 +57,11 @@
 				  <option value="">Choose...</option> <!-- Add more options-->
 				  <option>United States</option>
 				  <option>Sweden</option>
+
+				  {#each data.countries as country}
+				  <option>{country.name}</option>
+				  {/each}
+
 				</select>
 				<div class="invalid-feedback">
 				  Please select a valid country.

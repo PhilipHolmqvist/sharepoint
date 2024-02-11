@@ -10,6 +10,7 @@
 	import profilePic from '$lib/images/profile-picture.jpg';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	import Avatar from './Avatar.svelte'
 	const fullName = "Philip Holmqvist"
 	const username = "holmen00"
 	const signUpDate = "12 Jan 2024"
@@ -26,7 +27,43 @@
 		cancel();
 		
 	};
+
+	const showPreview = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    const files = target.files;
+
+    if (files && files.length > 0) {
+        const src = URL.createObjectURL(files[0]);
+        const preview = document.getElementById('avatar-preview') as HTMLImageElement;
+        preview.src = src;
+    }
+};
+
 </script>
+
+<style>
+	#photo-upload1{
+		position: absolute;
+  		font-size: 50px;
+  		opacity: 0;
+  		right: 0;
+  		top: 0;
+	}
+
+	#photo-upload2{
+		position: absolute;
+  		font-size: 50px;
+  		opacity: 0;
+  		right: 0;
+  		top: 0;
+	}
+
+	#photo-upload-div{
+		position: relative;
+  		overflow: hidden;
+	}
+
+</style>
 {#if data.session}
 <p>Welcome, {data.session.user.email}</p>
 <div class="container">
@@ -66,7 +103,7 @@
 									<div class="col-12 col-sm-auto mb-3">
 										<div class="mx-auto" style="width: 140px;">
 											<div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-												<img src={profilePic} class="img-thumbnail" alt="">
+												<img src={profilePic} class="img-thumbnail" alt="" id="avatar-preview">
 											</div>
 										</div>
 									</div>
@@ -79,17 +116,20 @@
 											<div class="text-muted">
 												<small>Last seen 2 hours ago</small>
 											</div>
-											<div class="mt-2">
-												<button
-													class="btn btn-primary"
-													type="button"
-												>
-													<i
-														class="fa fa-fw fa-camera"
-													></i>
-													<span>Change Photo</span>
-												</button>
+
+
+											<div class="mt-2" id="photo-upload-div">
+												<input class="form-control" type="file" id="photo-upload1" name="file" value="" accept="image/*"/>
+												<div class="file btn btn-primary">
+													<i class="fa fa-fw fa-camera"></i>
+													Change Photo
+													<input class="form-control" type="file" id="photo-upload2" name="avatar" value="" accept="image/*" on:change={showPreview}/>
+												</div>
 											</div>
+
+
+
+
 										</div>
 										<div class="text-center text-sm-right">
 											<span class="badge badge-secondary">{authLevel}</span>
@@ -332,6 +372,9 @@
 		</div>
 	</div>
 </div>
+
+
+
 {:else}
 <p>Du är utloggad</p>
 {goto("/")}
