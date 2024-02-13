@@ -10,6 +10,7 @@
 
 	export let data: PageData;
 
+	//Detects auth change.
 	onMount(() => {
 		const {
 			data: { subscription }
