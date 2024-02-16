@@ -66,6 +66,7 @@
 
 </style>
 {#if data.session}
+<p>Your name: {data.profile?.full_name}</p>
 <p>Welcome, {data.session.user.email}</p>
 <div class="container">
 	<div class="row flex-lg-nowrap">
