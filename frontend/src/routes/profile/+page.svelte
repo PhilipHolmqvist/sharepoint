@@ -401,8 +401,9 @@
 	</div>
 </div>
 
-
+ 
 <!-- Adding widget -->
+<!--
 <div class="form-widget">
 	<form
 	  class="form-widget"
@@ -422,6 +423,7 @@
 		  }}
 		/>
 		-->
+		<!--
 		<div>
 			<label for="email">Email</label>
 			<input id="email" type="text" value={data.session.user.email} disabled />
@@ -452,7 +454,7 @@
 		</div>
 	</form>
   </div>
-
+-->
 {:else}
 <p>Du är utloggad</p>
 {goto("/")}

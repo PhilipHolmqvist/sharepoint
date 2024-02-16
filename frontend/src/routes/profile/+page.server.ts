@@ -27,7 +27,7 @@ import { fail, redirect } from '@sveltejs/kit'
       profile: data,
     }
   }
-
+/*
   export async function update(request: Request, { locals }) {
     try {
       const formData = await request.formData();
@@ -67,4 +67,4 @@ import { fail, redirect } from '@sveltejs/kit'
       };
     }
   }
-  
+  */
