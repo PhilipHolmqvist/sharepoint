@@ -12,12 +12,32 @@
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
 	import Avatar from './Avatar.svelte'
-	const fullName = "Philip Holmqvist"
-	const username = "holmen00"
-	const signUpDate = "12 Jan 2024"
-	const authLevel = "administrator"
-	const email = "philip.holmqvist@outlook.com"
 	export let data: PageData;
+	export let form
+
+	
+
+	//let { session, sb, profile } = data
+	//$: ({ session, supabase, profile } = data)
+	let signUpDate = "12 Jan 2024"
+	let authLevel = "administrator"
+	let email = "philip.holmqvist@outlook.com"
+	let loading = false
+	let profileForm: HTMLFormElement
+	let fullName: string = data.profile?.full_name ?? ''
+	let username: string = data.profile?.username ?? ''
+	let website: string = data.profile?.website ?? ''
+	let avatarUrl: string = data.profile?.avatar_url ?? ''
+	
+
+	
+	
+	const handleSubmit: SubmitFunction = () => {
+		loading = true
+		return async () => {
+			loading = false
+		}
+	}
 
 	const submitLogout: SubmitFunction = async ({ cancel }) => {
 		const { error } = await supabaseClient.auth.signOut();
@@ -382,6 +402,56 @@
 </div>
 
 
+<!-- Adding widget -->
+<div class="form-widget">
+	<form
+	  class="form-widget"
+	  method="post"
+	  action="?/update"
+	  use:enhance={handleSubmit}
+	  bind:this={profileForm}
+	>
+	  <!-- Add to body -->
+	  <!--
+	  <Avatar
+		  {supabase}
+		  bind:url={avatarUrl}
+		  size={10}
+		  on:upload={() => {
+			profileForm.requestSubmit();
+		  }}
+		/>
+		-->
+		<div>
+			<label for="email">Email</label>
+			<input id="email" type="text" value={data.session.user.email} disabled />
+		</div>
+
+		<div>
+			<label for="fullName">Full Name</label>
+			<input id="fullName" name="fullName" type="text" value={data.profile?.full_name} />
+		</div>
+
+		<div>
+			<label for="username">Username</label>
+			<input id="username" name="username" type="text" value={data.profile?.username} />
+		</div>
+
+		<div>
+			<label for="website">Website</label>
+			<input id="website" name="website" type="url" value={data.profile?.website} />
+		</div>
+
+		<div>
+			<input
+				type="submit"
+				class="button block primary"
+				value={loading ? 'Loading...' : 'Update'}
+				disabled={loading}
+			/>
+		</div>
+	</form>
+  </div>
 
 {:else}
 <p>Du är utloggad</p>
