@@ -8,7 +8,7 @@ import type { Session } from "@supabase/supabase-js";
     const { data: profile } = await supabaseClient
       .from('profiles')
       .select(`username, full_name, website, avatar_url`)
-      //.eq('id', "1")
+      .eq('id', session.user.id)
       .single()
 
     console.log("session: ", session.user)  
