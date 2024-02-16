@@ -29,6 +29,7 @@
 		
 	};
 
+	//Code for previewing the changed profile picture. Makes the profile picture change instantly instead of having to wait for it to upload.
 	const showPreview = (event: Event) => {
     const target = event.target as HTMLInputElement;
     const files = target.files;
@@ -66,8 +67,6 @@
 
 </style>
 {#if data.session}
-<p>Your name: {data.profile?.full_name}</p>
-<p>Welcome, {data.session.user.email}</p>
 <div class="container">
 	<div class="row flex-lg-nowrap">
 		<div class="col-12 col-lg-auto mb-3" style="width: 200px;">

@@ -8,5 +8,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.sb = supabaseClient
 	event.locals.session = session
 
+	// event gets passed to +server.ts, +page.server.ts, +layout.server.ts and so on
+	// the event can then be descruted.
 	return resolve(event)
 }

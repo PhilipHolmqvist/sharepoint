@@ -1,21 +1,24 @@
 
 import { supabaseClient } from "$lib/supabase";
 import type { Session } from "@supabase/supabase-js";
+import type { PageServerLoad } from "./$types";
 
-  export async function load(session) {
 
-    
-    const { data: profile } = await supabaseClient
-      .from('profiles')
+
+  export const load: PageServerLoad = async ({ locals }) => {
+
+    //Get user profile information.
+    const{ data } = await supabaseClient
+	    .from('profiles')
       .select(`username, full_name, website, avatar_url`)
-      .eq('id', session.user.id)
+      .eq('id', locals.session?.user.id)
       .single()
-
-    console.log("session: ", session.user)  
-    console.log("Profile: ", profile)  
-    const { data } = await supabaseClient.from("countries").select();
+    
+    //Get countries list, used in album creation.
+    //const {  } = await supabaseClient.from("countries").select();
+    // countries: countries ?? [],
     return {
-      countries: data ?? [],
-      profile,
-    };
+      profile: data,
+    }
   }
+
