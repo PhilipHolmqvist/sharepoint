@@ -160,7 +160,7 @@
 								</ul>
 								<div class="tab-content pt-3">
 									<div class="tab-pane active">
-										<form class="form" novalidate>
+										<form method="POST" class="form" novalidate>
 											<div class="row">
 												<div class="col">
 													<div class="row">
@@ -170,7 +170,7 @@
 																<input
 																	class="form-control"
 																	type="text"
-																	name="name"
+																	name="fullName"
 																	placeholder={fullName}
 																	value={fullName}
 																/>
