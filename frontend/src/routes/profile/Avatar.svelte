@@ -50,10 +50,12 @@
 
 			url = filePath
 			setTimeout(() => {
+				console.log("Uploading!.....")
 				dispatch('upload')
-			}, 100)
+			}, 10000)
 		} catch (error) {
 			if (error instanceof Error) {
+				console.log("Error: ", error)
 				alert(error.message)
 			}
 		} finally {

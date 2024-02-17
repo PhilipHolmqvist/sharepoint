@@ -13,12 +13,10 @@
 	import { goto } from '$app/navigation';
 	import Avatar from './Avatar.svelte'
 	export let data: PageData;
-	export let form
 
-	
+	let { session, supabase, profile } = data
+	$: ({ session, supabase, profile } = data)
 
-	//let { session, sb, profile } = data
-	//$: ({ session, supabase, profile } = data)
 	let signUpDate = "12 Jan 2024"
 	let authLevel = "administrator"
 	let loading = false
@@ -28,7 +26,6 @@
 	let website: string = data.profile?.website ?? ''
 	let avatarUrl: string = data.profile?.avatar_url ?? ''
 	
-
 	const handleSubmit: SubmitFunction = () => {
 		loading = true
 		return async () => {
@@ -364,9 +361,8 @@
 	</div>
 </div>
 
- 
+
 <!-- Adding widget -->
-<!--
 <div class="form-widget">
 	<form
 	  class="form-widget"
@@ -376,7 +372,6 @@
 	  bind:this={profileForm}
 	>
 	  <!-- Add to body -->
-	  <!--
 	  <Avatar
 		  {supabase}
 		  bind:url={avatarUrl}
@@ -385,8 +380,7 @@
 			profileForm.requestSubmit();
 		  }}
 		/>
-		-->
-		<!--
+	
 		<div>
 			<label for="email">Email</label>
 			<input id="email" type="text" value={data.session.user.email} disabled />
@@ -417,7 +411,7 @@
 		</div>
 	</form>
   </div>
--->
+
 {:else}
 <p>Du är utloggad</p>
 {goto("/")}
