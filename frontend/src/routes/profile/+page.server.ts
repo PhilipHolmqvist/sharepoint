@@ -39,7 +39,7 @@ import { fail, redirect } from '@sveltejs/kit'
       const fullName = formData.get('fullName') as string;
       const username = formData.get('username') as string;
       const website = formData.get('website') as string;
-      const avatarUrl = formData.get('avatarUrl') as string;
+      const avatarUrl = formData.get('avatarUrl') as string; //ToDo: Hämtas inte korrekt, blir null. 
       const biograph = formData.get('biograph') as string;
       const password = formData.get('password') as string; //ToDo fixa kryptering och hantera på rätt sätt. Går inte att uppdatera för tillfället.
       

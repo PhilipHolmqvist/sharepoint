@@ -143,6 +143,7 @@
 
 											<div>
 												<input
+													name="avatarUrl"
 													type="submit"
 													class="button block primary"
 													value={loading ? 'Loading...' : 'Update'}
