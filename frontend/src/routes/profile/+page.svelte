@@ -118,6 +118,54 @@
 
 									<!-- Profile picture start -->
 
+									<!-- Adding widget -->
+									
+									<div class="form-widget">
+										<form
+										class="form-widget"
+										method="post"
+										action="?/update"
+										use:enhance={handleSubmit}
+										bind:this={profileForm}
+										>
+
+										
+										<!-- Add to body -->
+										
+										<Avatar
+											bind:url={avatarUrl}
+											size={10}
+											on:upload={() => {
+												profileForm.requestSubmit();
+											}}
+											/>
+										
+
+											<div>
+												<input
+													type="submit"
+													class="button block primary"
+													value={loading ? 'Loading...' : 'Update'}
+													disabled={loading}
+												/>
+											</div>
+										</form>
+									</div>
+									
+
+
+									<!--
+									<label>Full Name
+										<input
+											class="form-control"
+											type="text"
+											name="fullName"
+											placeholder={fullName}
+											value={fullName}
+										/>
+										</label>
+										-->
+
 									<div class="col-12 col-sm-auto mb-3">
 										<div class="mx-auto" style="width: 140px;">
 											<div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
@@ -366,55 +414,6 @@
 	</div>
 </div>
 
-
-<!-- Adding widget -->
-<div class="form-widget">
-	<form
-	  class="form-widget"
-	  method="post"
-	  action="?/update"
-	  use:enhance={handleSubmit}
-	  bind:this={profileForm}
-	>
-	  <!-- Add to body -->
-	  <Avatar
-		  bind:url={avatarUrl}
-		  size={10}
-		  on:upload={() => {
-			profileForm.requestSubmit();
-		  }}
-		/>
-	
-		<div>
-			<label for="email">Email</label>
-			<input id="email" type="text" value={data.session.user.email} disabled />
-		</div>
-
-		<div>
-			<label for="fullName">Full Name</label>
-			<input id="fullName" name="fullName" type="text" value={data.profile?.full_name} />
-		</div>
-
-		<div>
-			<label for="username">Username</label>
-			<input id="username" name="username" type="text" value={data.profile?.username} />
-		</div>
-
-		<div>
-			<label for="website">Website</label>
-			<input id="website" name="website" type="url" value={data.profile?.website} />
-		</div>
-
-		<div>
-			<input
-				type="submit"
-				class="button block primary"
-				value={loading ? 'Loading...' : 'Update'}
-				disabled={loading}
-			/>
-		</div>
-	</form>
-  </div>
 
 {:else}
 <p>Du är utloggad</p>
