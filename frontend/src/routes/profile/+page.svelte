@@ -14,8 +14,7 @@
 	import Avatar from './Avatar.svelte'
 	export let data: PageData;
 
-	let { session, supabase, profile } = data
-	$: ({ session, supabase, profile } = data)
+	let supabase = supabaseClient;
 
 	let signUpDate = "12 Jan 2024"
 	let authLevel = "administrator"
@@ -116,6 +115,9 @@
 						<div class="card-body">
 							<div class="e-profile">
 								<div class="row">
+
+									<!-- Profile picture start -->
+
 									<div class="col-12 col-sm-auto mb-3">
 										<div class="mx-auto" style="width: 140px;">
 											<div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
@@ -123,6 +125,9 @@
 											</div>
 										</div>
 									</div>
+
+									<!-- Profile picture end -->
+
 									<div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
 										<div class="text-center text-sm-left mb-2 mb-sm-0">
 											<h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
@@ -373,7 +378,6 @@
 	>
 	  <!-- Add to body -->
 	  <Avatar
-		  {supabase}
 		  bind:url={avatarUrl}
 		  size={10}
 		  on:upload={() => {

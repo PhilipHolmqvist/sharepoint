@@ -7,9 +7,11 @@ import { fail, redirect } from '@sveltejs/kit'
 
 
   export const load: PageServerLoad = async ({ locals }) => {
-
+      
     //Get user profile information.
-    const{ data } = 
+   
+
+    const{ data } =
       await supabaseClient
 	    .from('profiles')
       .select(`username, full_name, website, avatar_url`)
@@ -81,4 +83,4 @@ import { fail, redirect } from '@sveltejs/kit'
   }
 
     }
-  };
+};
