@@ -23,9 +23,9 @@
 	let profileForm: HTMLFormElement
 	let fullName: string = profile?.full_name ?? ''
 	let username: string = profile?.username ?? ''
-	let website: string = data.profile?.website ?? ''
-	let avatarUrl: string = data.profile?.avatar_url ?? ''
-	
+	let website: string = profile?.website ?? ''
+	let avatarUrl: string = profile?.avatar_url ?? ''
+
 	const handleSubmit: SubmitFunction = () => {
 		loading = true
 		return async () => {
@@ -107,6 +107,13 @@
 				</div>
 			</div>
 		</div>
+		<form
+			class="form-widget"
+			method="post"
+			action="?/update"
+			use:enhance={handleSubmit}
+			bind:this={profileForm}
+		>
 		<div class="col">
 			<div class="row">
 				<div class="col mb-3">
@@ -114,69 +121,24 @@
 						<div class="card-body">
 							<div class="e-profile">
 								<div class="row">
-
-									<!-- Profile picture start -->
-
-									<!-- Adding widget -->
 									
-									<div class="form-widget">
-										<form
-										class="form-widget"
-										method="post"
-										action="?/update"
-										use:enhance={handleSubmit}
-										bind:this={profileForm}
-										>
-
-										
-										<!-- Add to body -->
-										
-										<Avatar
-											{supabase}
-											bind:url={avatarUrl}
-											size={10}
-											on:upload={() => {
-												profileForm.requestSubmit();
-											}}
-											/>
-										
-
-											<div>
-												<input
-													name="avatarUrl"
-													type="submit"
-													class="button block primary"
-													value={loading ? 'Loading...' : 'Update'}
-													disabled={loading}
-												/>
-											</div>
-										</form>
-									</div>
-									
-
-
-									<!--
-									<label>Full Name
-										<input
-											class="form-control"
-											type="text"
-											name="fullName"
-											placeholder={fullName}
-											value={fullName}
-										/>
-										</label>
-										-->
-
+									<!-- Profile picture start-->
 									<div class="col-12 col-sm-auto mb-3">
 										<div class="mx-auto" style="width: 140px;">
 											<div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-												<img src={profilePic} class="img-thumbnail" alt="" id="avatar-preview">
+												<Avatar
+													{supabase}
+													bind:url={avatarUrl}
+													size={10}
+													on:upload={() => {
+													profileForm.requestSubmit();
+													}}
+												/>
 											</div>
 										</div>
 									</div>
-
 									<!-- Profile picture end -->
-
+							
 									<div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
 										<div class="text-center text-sm-left mb-2 mb-sm-0">
 											<h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
@@ -186,14 +148,47 @@
 											<div class="text-muted">
 												<small>Last seen 2 hours ago</small>
 											</div>
+
+											<!--Change photo button start-->
 											<div class="mt-2" id="photo-upload-div">
 												<input class="form-control" type="file" id="photo-upload1" name="file" value="" accept="image/*"/>
 												<div class="file btn btn-primary">
-													<i class="fa fa-fw fa-camera"></i>
+													<i class="fa fa-fw fa-camera"></i>	
 													Change Photo
 													<input class="form-control" type="file" id="photo-upload2" name="avatar" value="" accept="image/*" on:change={showPreview}/>
 												</div>
 											</div>
+											<!--Change photo button end-->
+
+											<input type="hidden" name="avatarUrl" value={url} />
+
+											<div style="width: {size}em;">
+												<label class="button primary block" for="single">
+													{uploading ? 'Uploading ...' : 'Upload'}
+												</label>
+												<input
+													style="visibility: hidden; position:absolute;"
+													type="file"
+													id="single"
+													accept="image/*"
+													bind:files
+													on:change={uploadAvatar}
+													disabled={uploading}
+												/>
+											</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 										</div>
 										<div class="text-center text-sm-right">
 											<span class="badge badge-secondary">{authLevel}</span>

@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
     .select(`username, full_name, website, avatar_url`)
     .eq('id', session.user.id)
     .single()
-
+  console.log(profile)
   return { session, profile }
 }
 

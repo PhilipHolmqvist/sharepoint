@@ -50,8 +50,6 @@
 				throw error
 			}
 
-			console.log("då")
-
 			url = filePath
 			setTimeout(() => {
 				console.log("Uploading!.....")
@@ -71,16 +69,19 @@
 </script>
 
 <div>
+
 	{#if avatarUrl}
 		<img
 			src={avatarUrl}
 			alt={avatarUrl ? 'Avatar' : 'No image'}
-			class="avatar image"
+			class="img-thumbnail"
+			id="avatar-preview"
 			style="height: {size}em; width: {size}em;"
 		/>
 	{:else}
 		<div class="avatar no-image" style="height: {size}em; width: {size}em;" />
 	{/if}
+	<!--
 	<input type="hidden" name="avatarUrl" value={url} />
 
 	<div style="width: {size}em;">
@@ -97,4 +98,5 @@
 			disabled={uploading}
 		/>
 	</div>
+	-->
 </div>

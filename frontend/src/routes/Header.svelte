@@ -1,10 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import logo from '$lib/images/icon.jpg';
 	import profilePic from '$lib/images/profile-picture.jpg';
-	import { goto } from '$app/navigation';
-
-
 </script>
 
 

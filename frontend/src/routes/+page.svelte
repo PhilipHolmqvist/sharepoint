@@ -1,13 +1,8 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
-	import type { SubmitFunction } from "@sveltejs/kit";
 	import type { PageData } from './$types';
 	import { redirect } from '@sveltejs/kit';
-	import Header from "./Header.svelte";
-
 	export let data: PageData;
 
-	
 </script>
 
 <main>
