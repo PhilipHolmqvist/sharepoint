@@ -5,7 +5,6 @@
 	import { onMount } from 'svelte'
 	import Header from './Header.svelte'
 
-
 	export let data
 
 	let { supabase, session } = data

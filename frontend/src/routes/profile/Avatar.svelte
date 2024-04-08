@@ -1,6 +1,5 @@
-<!-- src/routes/account/Avatar.svelte -->
+
 <script lang="ts">
-	import { supabaseClient } from '$lib/supabase'
 	import { createEventDispatcher } from 'svelte'
 
 	export let size = 10
@@ -14,7 +13,7 @@
 
 	const downloadImage = async (path: string) => {
 		try {
-			const { data, error } = await supabaseClient.storage.from('avatars').download(path)
+			const { data, error } = await supabase.storage.from('avatars').download(path)
 
 			if (error) {
 				throw error

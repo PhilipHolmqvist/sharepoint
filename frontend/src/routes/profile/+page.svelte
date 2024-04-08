@@ -13,8 +13,6 @@
 	import Avatar from './Avatar.svelte'
 	export let data: PageData;
 
-	let supabase = supabaseClient;
-
 	let signUpDate = "12 Jan 2024"
 	let authLevel = "administrator"
 	let loading = false
