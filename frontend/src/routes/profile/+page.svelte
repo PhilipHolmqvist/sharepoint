@@ -9,16 +9,20 @@
 	import type { SubmitFunction } from "@sveltejs/kit";
 	import profilePic from '$lib/images/profile-picture.jpg';
 	import type { PageData } from './$types';
-	import { goto } from '$app/navigation';
 	import Avatar from './Avatar.svelte'
-	export let data: PageData;
+	
+	export let data
+	export let form
+
+	let { session, supabase, profile } = data
+	$: ({ session, supabase, profile } = data)
 
 	let signUpDate = "12 Jan 2024"
 	let authLevel = "administrator"
 	let loading = false
 	let profileForm: HTMLFormElement
-	let fullName: string = data.profile?.full_name ?? ''
-	let username: string = data.profile?.username ?? ''
+	let fullName: string = profile?.full_name ?? ''
+	let username: string = profile?.username ?? ''
 	let website: string = data.profile?.website ?? ''
 	let avatarUrl: string = data.profile?.avatar_url ?? ''
 	
@@ -128,6 +132,7 @@
 										<!-- Add to body -->
 										
 										<Avatar
+											{supabase}
 											bind:url={avatarUrl}
 											size={10}
 											on:upload={() => {
@@ -217,8 +222,8 @@
 																	class="form-control"
 																	type="text"
 																	name="fullName"
-																	placeholder={fullName}
-																	value={fullName}
+																	placeholder={form?.fullName ?? fullName}
+																	value={form?.fullName ?? fullName}
 																/>
 																</label>
 															</div>
@@ -389,7 +394,7 @@
 									<!-- <span>Logout</span> -->
 
 									
-									<form action="/logout" method="POST" use:enhance={handleSignOut}>
+									<form method="post" action="?/signout" use:enhance={handleSignOut}>
 										<button type="submit" class="btn btn-primary">Logout</button>
 									</form>
 								</button>
@@ -417,7 +422,6 @@
 
 {:else}
 <p>Du är utloggad</p>
-{goto("/")}
 {/if}
 
 

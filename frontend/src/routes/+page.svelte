@@ -2,7 +2,7 @@
 	import { enhance } from "$app/forms";
 	import type { SubmitFunction } from "@sveltejs/kit";
 	import type { PageData } from './$types';
-	import { goto } from '$app/navigation';
+	import { redirect } from '@sveltejs/kit';
 	import Header from "./Header.svelte";
 
 	export let data: PageData;
@@ -15,10 +15,10 @@
 	
 	{#if data.session}
 		
-		{goto("/dashboard")}
-		<p>Welcome, {data.session.user.email}</p>
+		{redirect(307, '/dashboard')}
+		<p>Welcome, {data.session?.user.email}</p>
 	{:else}
-		{goto("/login")} 
+		{redirect(307, '/login')}
 		
 	{/if}
 </main>
