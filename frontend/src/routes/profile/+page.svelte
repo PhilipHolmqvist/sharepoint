@@ -7,7 +7,6 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
 	import type { SubmitFunction } from "@sveltejs/kit";
-	import { supabaseClient } from '$lib/supabase';
 	import profilePic from '$lib/images/profile-picture.jpg';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
@@ -33,15 +32,13 @@
 		}
 	}
 
-	const submitLogout: SubmitFunction = async ({ cancel }) => {
-		const { error } = await supabaseClient.auth.signOut();
-		if (error) {
-			console.log(error);
+	const handleSignOut: SubmitFunction = () => {
+		loading = true
+		return async ({ update }) => {
+			loading = false
+			update()
 		}
-		console.log("Utloggad!")
-		cancel();
-		
-	};
+	}
 
 	//Code for previewing the changed profile picture. Makes the profile picture change instantly instead of having to wait for it to upload.
 	const showPreview = (event: Event) => {
@@ -195,6 +192,7 @@
 																<input
 																	class="form-control"
 																	type="text"
+																	name="email"
 																	placeholder={data.session.user.email}
 																/>
 																</label>
@@ -310,9 +308,12 @@
 											</div>
 											<div class="row">
 												<div class="col d-flex justify-content-end">
-													<button class="btn btn-primary" type="submit">
-														Save Changes
-													</button>
+													<input
+														type="submit"
+														class="btn btn-primary"
+														value={loading ? 'Loading...' : 'Save Changes'}
+														disabled={loading}
+													/>
 												</div>
 											</div>
 										</form>
@@ -336,7 +337,7 @@
 									<!-- <span>Logout</span> -->
 
 									
-									<form action="/logout" method="POST" use:enhance={submitLogout}>
+									<form action="/logout" method="POST" use:enhance={handleSignOut}>
 										<button type="submit" class="btn btn-primary">Logout</button>
 									</form>
 								</button>

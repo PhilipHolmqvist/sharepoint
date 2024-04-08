@@ -1,84 +1,66 @@
 
-import { supabaseClient } from "$lib/supabase";
-import type { Session } from "@supabase/supabase-js";
-import type { PageServerLoad } from "./$types";
 import { fail, redirect } from '@sveltejs/kit'
+import type { Actions, PageServerLoad } from './$types'
 
 
 
-  export const load: PageServerLoad = async ({ locals }) => {
+//Denna funktionen laddar in användarens data så fort sidan laddas.
+export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession } }) => {
+  const { session } = await safeGetSession()
 
-    //Get user profile information.
-    const{ data } = 
-      await supabaseClient
-	    .from('profiles')
-      .select(`username, full_name, website, avatar_url`)
-      .eq('id', locals.session?.user.id)
-      .single()
-
-
-    
-  
-    
-    //Get countries list, used in album creation.
-    //const {  } = await supabaseClient.from("countries").select();
-    // countries: countries ?? [],
-    return {
-      profile: data,
-    }
+  if (!session) {
+    throw redirect(303, '/')
   }
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select(`username, full_name, website, avatar_url`)
+    .eq('id', session.user.id)
+    .single()
 
-
-  export const actions = {
-    default: async ({request, locals}) => {
-      // TODO update user info.
-      try{
-      const formData = await request.formData();
-      const fullName = formData.get('fullName') as string;
-      const username = formData.get('username') as string;
-      const website = formData.get('website') as string;
-      const avatarUrl = formData.get('avatarUrl') as string;
-      const biograph = formData.get('biograph') as string;
-      const password = formData.get('password') as string; //ToDo fixa kryptering och hantera på rätt sätt. Går inte att uppdatera för tillfället.
-      
-      console.log("FormData: ", fullName, username, website, avatarUrl, biograph, password)
-
-      const session = locals.sb.auth.session
-      const id = locals.session?.user.id
-      console.log("Session: ", id)
-
-      const { error } = await locals.sb
-      .from('profiles')
-      .update({
+  return { session, profile }
+  }
+  
+  //Denna funktionen uppdaterar profilen av användaren.
+  export const actions: Actions = {
+    update: async ({ request, locals: { supabase, safeGetSession } }) => {
+      const formData = await request.formData()
+      const fullName = formData.get('fullName') as string
+      const username = formData.get('username') as string
+      const website = formData.get('website') as string
+      const avatarUrl = formData.get('avatarUrl') as string
+  
+      const { session } = await safeGetSession()
+  
+      const { error } = await supabase.from('profiles').upsert({
+        id: session?.user.id,
         full_name: fullName,
         username,
         website,
         avatar_url: avatarUrl,
-        biograph,
         updated_at: new Date(),
       })
-      .eq('id', id);
-
-    if (error) {
-      console.log(error)
+  
+      if (error) {
+        return fail(500, {
+          fullName,
+          username,
+          website,
+          avatarUrl,
+        })
+      }
+  
       return {
-        status: 500,
-        body: { error: 'Failed to update profile' },
-      };
-    }
-
-    console.log("Profile updated successfully 200")
-    return {
-      status: 200,
-      body: { message: 'Profile updated successfully' },
-    };
-  } catch (error) {
-    console.log("Internal server error 500")
-    return {
-      status: 500,
-      body: { error: 'Internal Server Error' },
-    };
+        fullName,
+        username,
+        website,
+        avatarUrl,
+      }
+    },
+    signout: async ({ locals: { supabase, safeGetSession } }) => {
+      const { session } = await safeGetSession()
+      if (session) {
+        await supabase.auth.signOut()
+        throw redirect(303, '/')
+      }
+    },
   }
-
-    }
-  };

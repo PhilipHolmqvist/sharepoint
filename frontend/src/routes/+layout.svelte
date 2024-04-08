@@ -1,28 +1,25 @@
 
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation';
-	import { supabaseClient } from '$lib/supabase';
-	import { onMount } from 'svelte';
-	import Header from './Header.svelte';
-	import type { PageData } from './$types';
-	//import '../app.postcss';
 	import './styles.css';
+	import { invalidate } from '$app/navigation'
+	import { onMount } from 'svelte'
+	import Header from './Header.svelte'
 
-	export let data: PageData;
 
-	//Detects auth change.
+	export let data
+
+	let { supabase, session } = data
+	$: ({ supabase, session } = data)
+
 	onMount(() => {
-		const {
-			data: { subscription }
-		} = supabaseClient.auth.onAuthStateChange(() => {
-			console.log('Auth state change detected');
-			invalidateAll();
-		});
+		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth')
+			}
+		})
 
-		return () => {
-			subscription.unsubscribe();
-		};
-	});
+		return () => data.subscription.unsubscribe()
+	})
 </script>
 
 <div class="app">

@@ -42,11 +42,15 @@
 			const fileExt = file.name.split('.').pop()
 			const filePath = `${Math.random()}.${fileExt}`
 
+			console.log("hej")
+
 			const { error } = await supabase.storage.from('avatars').upload(filePath, file)
 
 			if (error) {
 				throw error
 			}
+
+			console.log("då")
 
 			url = filePath
 			setTimeout(() => {
